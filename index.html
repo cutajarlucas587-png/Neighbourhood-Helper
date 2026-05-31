@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Street Hustle | Your Local Helper</title>
+<style>
+  :root {
+    --bg: #faf8f4;
+    --ink: #1e1e2a;
+    --lime: #a3e635;
+    --lime-dark: #65a30d;
+    --coral: #fb7185;
+    --sky: #38bdf8;
+    --violet: #a78bfa;
+    --amber: #fbbf24;
+    --card: #ffffff;
+    --muted: #78716c;
+    --border: #e7e5e0;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 8px 30px rgba(0,0,0,0.07);
+    --shadow-lg: 0 16px 50px rgba(0,0,0,0.1);
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .mono {
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(250, 248, 244, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .logo-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--lime);
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: pulse-dot 2s ease infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.6; }
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.8rem;
+  }
+
+  nav ul li a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  nav ul li a:hover { color: var(--ink); }
+
+  .nav-cta {
+    background: var(--ink);
+    color: white !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .hamburger span {
+    width: 22px;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+
+  /* HERO */
+  .hero {
+    margin-top: 60px;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-shapes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+
+  .shape-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--lime);
+    top: -10%;
+    right: -5%;
+    animation: float-1 8s ease-in-out infinite;
+  }
+
+  .shape-2 {
+    width: 250px;
+    height: 250px;
+    background: var(--coral);
+    bottom: 10%;
+    left: -3%;
+    animation: float-2 10s ease-in-out infinite;
+  }
+
+  .shape-3 {
+    width: 180px;
+    height: 180px;
+    background: var(--sky);
+    top: 30%;
+    right: 20%;
+    animation: float-3 7s ease-in-out infinite;
+  }
+
+  @keyframes float-1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-20px, 30px) scale(1.05); }
+  }
+  @keyframes float-2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(25px, -20px) scale(1.08); }
+  }
+  @keyframes float-3 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-15px, 25px); }
+  }
+
+  .hero-inner {
+    max-width: 750px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .hero-badge .avail {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--lime);
+    animation: pulse-dot 2s ease infinite;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.6rem, 7vw, 4.5rem);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 .highlight {
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero h1 .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: -4px;
+    right: -4px;
+    height: 14px;
+    background: var(--lime);
+    opacity: 0.35;
+    z-index: -1;
+    border-radius: 3px;
+    transform: rotate(-1deg);
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.8rem;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    border: none;
+    font-family: inherit;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: white;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--border);
+  }
+  .btn-ghost:hover {
+    border-color: var(--ink);
+    background: var(--card);
+  }
+
+  /* WHAT I DO */
+  .services {
+    padding: 5rem 2rem;
+  }
+
+  .section-header {
+    max-width: 900px;
+    margin: 0 auto 3rem;
+  }
+
+  .section-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lime-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .services-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem 1.5rem;
+    transition: all 0.3s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: transparent;
+  }
+
+  .service-card:hover::before { opacity: 1; }
+
+  .service-card:nth-child(1)::before { background: var(--lime); }
+  .service-card:nth-child(2)::before { background: var(--coral); }
+  .service-card:nth-child(3)::before { background: var(--sky); }
+  .service-card:nth-child(4)::before { background: var(--violet); }
+  .service-card:nth-child(5)::before { background: var(--amber); }
+  .service-card:nth-child(6)::before { background: var(--coral); }
+
+  .service-emoji {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .service-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .service-card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+
+  .service-price {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    background: #f0fdf4;
+    color: var(--lime-dark);
+  }
+
+  /* PRICING */
+  .pricing {
+    background: var(--ink);
+    color: white;
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pricing::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: var(--lime);
+    opacity: 0.04;
+    top: -20%;
+    right: -10%;
+  }
+
+  .pricing .section-tag { color: var(--lime); }
+  .pricing .section-title { color: white; }
+
+  .pricing-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .price-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .price-card.featured {
+    background: rgba(163, 230, 53, 0.1);
+    border-color: rgba(163, 230, 53, 0.25);
+    transform: scale(1.03);
+  }
+
+  .price-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.09);
+  }
+
+  .price-card.featured:hover {
+    transform: translateY(-4px) scale(1.03);
+  }
+
+  .price-tier {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.75rem;
+  }
+
+  .price-card.featured .price-tier { color: var(--lime); }
+
+  .price-amount {
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .price-per {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 1.5rem;
+  }
+
+  .price-list {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 1.5rem;
+  }
+
+  .price-list li {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    padding: 0.4rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .price-list li::before {
+    content: '\2713';
+    color: var(--lime);
+    font-weight: 700;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .btn-price {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .btn-price:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  .price-card.featured .btn-price {
+    background: var(--lime);
+    color: var(--ink);
+    border-color: var(--lime);
+  }
+
+  .price-card.featured .btn-price:hover {
+    background: #bef264;
+  }
+
+  /* HOW IT WORKS */
+  .how-it-works {
+    padding: 5rem 2rem;
+  }
+
+  .steps {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 32px;
+    left: 15%;
+    right: 15%;
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+  }
+
+  .step {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-num {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin: 0 auto 1rem;
+    transition: all 0.3s;
+  }
+
+  .step:hover .step-num {
+    background: var(--ink);
+    color: white;
+    border-color: var(--ink);
+    transform: scale(1.1);
+  }
+
+  .step h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .step p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* BOOKING / CONTACT */
+  .booking {
+    padding: 5rem 2rem;
+  }
+
+  .booking-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .booking-inner .section-tag { text-align: center; }
+  .booking-inner .section-title { text-align: center; margin-bottom: 0.5rem; }
+
+  .booking-sub {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.03em;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--lime-dark);
+    box-shadow: 0 0 0 3px rgba(163, 230, 53, 0.15);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .btn-book {
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 100px;
+    background: var(--ink);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.25s;
+  }
+
+  .btn-book:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* FAQ */
+  .faq {
+    background: var(--card);
+    padding: 5rem 2rem;
+  }
+
+  .faq-list {
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 1.3rem 0;
+    font-size: 0.95rem;
+    font-family: inherit;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .faq-toggle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: all 0.3s;
+    font-weight: 300;
+  }
+
+  .faq-item.open .faq-toggle {
+    background: var(--ink);
+    color: white;
+    border-color: var(--ink);
+    transform: rotate(45deg);
+  }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 200px;
+  }
+
+  .faq-a p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    padding-bottom: 1.3rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.4);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    padding-bottom: 72px;
+  }
+
+  footer strong {
+    color: white;
+    font-weight: 700;
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .hamburger { display: flex; }
+    nav ul.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: rgba(250,248,244,0.98);
+      backdrop-filter: blur(20px);
+      padding: 1.5rem 2rem;
+      gap: 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 340px; }
+    .price-card.featured { transform: none; }
+    .price-card.featured:hover { transform: translateY(-4px); }
+    .steps { grid-template-columns: 1fr; gap: 1.5rem; }
+    .steps::before { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    section, .services, .how-it-works, .booking { padding: 3.5rem 1.5rem; }
+    .booking-inner { padding: 2rem 1.5rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    nav, .hamburger, .hero-bg-shapes { display: none; }
+    .hero { min-height: auto; margin-top: 0; }
+    section, .services, .pricing, .how-it-works, .booking, .faq {
+      padding: 1.5rem 0;
+      page-break-inside: avoid;
+    }
+    .service-card, .price-card, .review-card, .step { break-inside: avoid; }
+    .pricing { color: var(--ink); background: white; }
+    footer { padding-bottom: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">street hustle<span class="logo-dot"></span></div>
+  <ul id="navMenu">
+    <li><a href="#services">What I Do</a></li>
+    <li><a href="#pricing">Prices</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#book" class="nav-cta">Book Me</a></li>
+  </ul>
+  <button class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="avail"></span>
+      Available this weekend
+    </div>
+    <h1>Your neighbour&shy;hood's <span class="highlight">go-to helper</span></h1>
+    <p class="hero-desc">
+      Need your lawn mowed, car washed, or bins taken out? I'm 14, local, reliable, and way cheaper than the big companies. Let's sort it.
+    </p>
+    <div class="hero-cta">
+      <a href="#book" class="btn btn-primary">Book a Job &rarr;</a>
+      <a href="#services" class="btn btn-ghost">See What I Offer</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header">
+    <div class="section-tag">What I Do</div>
+    <h2 class="section-title">Six ways I can help out</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <span class="service-emoji">&#127793;</span>
+      <h3>Lawn Mowing</h3>
+      <p>Front and back gardens. I bring my own mower and leave everything tidy, clippings bagged.</p>
+      <span class="service-price">From &pound;10</span>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-emoji">&#128663;</span>
+      <h3>Car Washing</h3>
+      <p>Exterior wash, rinse, and dry. Wheels and windows included. Interior hoover available as an add-on.</p>
+      <span class="service-price">From &pound;8</span>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-emoji">&#128054;</span>
+      <h3>Dog Walking</h3>
+      <p>30 or 60 minute walks around the neighbourhood. I'll send you a photo so you know they're having a great time.</p>
+      <span class="service-price">From &pound;5</span>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-emoji">&#127811;</span>
+      <h3>Garden Tidying</h3>
+      <p>Weeding, raking leaves, trimming hedges, sweeping paths. Seasonal or one-off. Your garden, sorted.</p>
+      <span class="service-price">From &pound;12</span>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-emoji">&#128230;</span>
+      <h3>Bin &amp; Recycling</h3>
+      <p>I'll put your bins out on collection day and bring them back in. Never miss a pickup again.</p>
+      <span class="service-price">From &pound;3</span>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-emoji">&#128075;</span>
+      <h3>Odd Jobs</h3>
+      <p>Cleaning driveways, washing windows (ground floor!), organising garages, carrying shopping. Just ask.</p>
+      <span class="service-price">From &pound;8</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-header">
+    <div class="section-tag">Simple Pricing</div>
+    <h2 class="section-title">Pick what works for you</h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card fade-up">
+      <div class="price-tier">One-Off</div>
+      <div class="price-amount">&pound;8+</div>
+      <div class="price-per">per job</div>
+      <ul class="price-list">
+        <li>Any single service</li>
+        <li>Book when you need it</li>
+        <li>No commitment</li>
+      </ul>
+      <button class="btn-price" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Book a Job</button>
+    </div>
+    <div class="price-card featured fade-up">
+      <div class="price-tier">Weekly Regular</div>
+      <div class="price-amount">&pound;15</div>
+      <div class="price-per">per week</div>
+      <ul class="price-list">
+        <li>One main service weekly</li>
+        <li>Priority scheduling</li>
+        <li>10% cheaper than one-offs</li>
+        <li>Cancel any time</li>
+      </ul>
+      <button class="btn-price" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Start Weekly</button>
+    </div>
+    <div class="price-card fade-up">
+      <div class="price-tier">Combo Deal</div>
+      <div class="price-amount">&pound;20</div>
+      <div class="price-per">for 2 services</div>
+      <ul class="price-list">
+        <li>Pick any two services</li>
+        <li>Done same day</li>
+        <li>Best value</li>
+      </ul>
+      <button class="btn-price" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Get a Combo</button>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how">
+  <div class="section-header">
+    <div class="section-tag">Dead Simple</div>
+    <h2 class="section-title">How it works</h2>
+  </div>
+  <div class="steps">
+    <div class="step fade-up">
+      <div class="step-num">1</div>
+      <h3>Pick a service</h3>
+      <p>Choose what you need from the list or tell me something custom.</p>
+    </div>
+    <div class="step fade-up">
+      <div class="step-num">2</div>
+      <h3>Send me a message</h3>
+      <p>Fill in the form below or text me. We'll agree a day and time.</p>
+    </div>
+    <div class="step fade-up">
+      <div class="step-num">3</div>
+      <h3>Job done</h3>
+      <p>I show up, do the work properly, and you pay when you're happy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="book">
+  <div class="booking-inner">
+    <div class="section-tag">Let's Go</div>
+    <h2 class="section-title">Book me in</h2>
+    <p class="booking-sub">Fill this in and I'll text you back to confirm.</p>
+    <form onsubmit="handleBook(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="e.g. Mrs. Henderson">
+        </div>
+        <div class="form-group">
+          <label>Phone or Email</label>
+          <input type="text" placeholder="So I can get back to you">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>What Do You Need?</label>
+        <select>
+          <option>Lawn Mowing</option>
+          <option>Car Washing</option>
+          <option>Dog Walking</option>
+          <option>Garden Tidying</option>
+          <option>Bin &amp; Recycling</option>
+          <option>Odd Jobs</option>
+          <option>Combo (pick 2)</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Street</label>
+          <input type="text" placeholder="e.g. 14 Oak Avenue">
+        </div>
+        <div class="form-group">
+          <label>Preferred Day</label>
+          <select>
+            <option>This weekend</option>
+            <option>Monday</option>
+            <option>Tuesday</option>
+            <option>Wednesday</option>
+            <option>Thursday</option>
+            <option>Friday</option>
+            <option>Next weekend</option>
+            <option>Weekly / ongoing</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Anything Else?</label>
+        <textarea placeholder="Any details, special requests, or questions..."></textarea>
+      </div>
+      <button type="submit" class="btn-book" id="bookBtn">Send Booking Request</button>
+    </form>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="section-header">
+    <div class="section-tag">Questions</div>
+    <h2 class="section-title">Good to know</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Do your parents know you're doing this?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a"><p>Yes! My parents fully support me and know about every job I take on. They're happy for me to earn my own money and I always let them know where I am.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How far will you travel?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a"><p>I cover streets within about 10 minutes' walk or bike ride from my house. If you're not sure, just ask and I'll let you know.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        When are you available?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a"><p>Weekday evenings after school (4pm onwards) and most of the day on weekends and school holidays. I always confirm the time before I come.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What if the weather's bad?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a"><p>I'll message you the night before if it looks like rain. We can reschedule for free — no stress. Indoor jobs like garage organising can still happen.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How do I pay?
+        <span class="faq-toggle">+</span>
+      </button>
+      <div class="faq-a"><p>Cash is easiest, or bank transfer if you prefer. You pay after the job's done and you're happy with it. No upfront costs.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>street hustle</strong> &middot; Your friendly neighbourhood helper &middot; &copy; 2026
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // Booking form
+  function handleBook(e) {
+    e.preventDefault();
+    const btn = document.getElementById('bookBtn');
+    btn.textContent = 'Sent! I\'ll text you back soon';
+    btn.style.background = '#65a30d';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = 'Send Booking Request';
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 4000);
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('navMenu').classList.remove('open');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
